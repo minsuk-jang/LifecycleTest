@@ -12,6 +12,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.example.lifecycletest.databinding.ActivityMainBinding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlin.math.log
 
@@ -27,9 +28,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             add(binding.frameLayout.id, FirstFragment.getInstance())
         }.commit()*/
 
-        vm.run()
-
-        //repeatOnLifecycleStarted()
+        repeatOnLifecycleStarted()
         launchWhenStarted()
     }
 
@@ -37,16 +36,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         lifecycleScope.launch {
             repeatOnLifecycle(state = Lifecycle.State.STARTED) {
                 vm.state.collectLatest {
-                    Log.e("jms8732", "repeatOnLifecycleStarted: $it")
+                    binding.textViewOne.text = "repeatOnLifecycleStarted: $it"
                 }
             }
         }
     }
-    
-    private fun launchWhenStarted(){
-        lifecycleScope.launchWhenStarted { 
-            vm.state.collectLatest {
-                Log.e("jms8732", "launchWhenStarted: $it", )
+
+    private fun launchWhenStarted() {
+        lifecycleScope.launchWhenStarted {
+            vm.state1.collectLatest {
+                binding.textViewTwo.text = "launchWhenStarted: $it"
             }
         }
     }

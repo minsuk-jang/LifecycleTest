@@ -23,16 +23,6 @@ class FirstFragment : BaseFragment<FragmentFirstBinding>(R.layout.fragment_first
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        //repeatOnLifecycleStart()
-        launchWhenStarted()
-
-        binding.button.setOnClickListener {
-            parentFragmentManager.beginTransaction().apply {
-                replace(R.id.frame_layout, SecondFragment.getInstance())
-                addToBackStack(null)
-            }.commit()
-        }
     }
 
     private fun repeatOnLifecycleStart() {
